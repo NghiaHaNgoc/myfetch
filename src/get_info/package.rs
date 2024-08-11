@@ -11,7 +11,7 @@ pub fn packages() -> Option<String> {
             ("pacman", pacman_num_packages())
         }
         "Debian" | "Ubuntu" => ("apt", apt_num_packages()),
-         "NixOS" => ("nix", nix_num_packages()),
+        "NixOS" => ("nix", nix_num_packages()),
         _ => return None,
     };
     Some(format!("{} ({})", num.unwrap_or(0), name))
@@ -23,7 +23,8 @@ pub(super) fn pacman_num_packages() -> Option<usize> {
     let pacman_output = match pacman.output() {
         Ok(it) => it,
         Err(_) => return None,
-    }.stdout;
+    }
+    .stdout;
     let pacman_output = match String::from_utf8(pacman_output) {
         Ok(it) => it,
         Err(_) => return None,
@@ -38,7 +39,8 @@ fn apt_num_packages() -> Option<usize> {
     let apt_output = match apt.output() {
         Ok(it) => it,
         Err(_) => return None,
-    }.stdout;
+    }
+    .stdout;
     let apt_output = match String::from_utf8(apt_output) {
         Ok(it) => it,
         Err(_) => return None,
@@ -53,7 +55,8 @@ fn nix_num_packages() -> Option<usize> {
     let apt_output = match apt.output() {
         Ok(it) => it,
         Err(_) => return None,
-    }.stdout;
+    }
+    .stdout;
     let apt_output = match String::from_utf8(apt_output) {
         Ok(it) => it,
         Err(_) => return None,

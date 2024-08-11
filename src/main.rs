@@ -1,5 +1,6 @@
 mod display;
 mod get_info;
+mod util;
 use console::Style;
 use get_info::Info;
 use rand::Rng;
@@ -29,10 +30,13 @@ fn main() {
     ];
     let mut random = rand::thread_rng();
     // random header color
-    let rand_color_header = display::gen_color(random.gen_range(0..6));
+    let rand_color_header = util::gen_color(random.gen_range(0..6));
     let style_header = Style::new().bold().fg(rand_color_header);
+    // Random logo color
+    let logo_color = util::gen_color(random.gen_range(0..6));
+    let logo_style = Style::new().bold().fg(logo_color);
     // seed number color
     let seed_num_color_info = random.gen_range(0..6);
 
-    display::display_fetch(&list, style_header, seed_num_color_info);
+    display::display_fetch(&list, style_header, logo_style, seed_num_color_info);
 }

@@ -1,27 +1,17 @@
-use std::process::Command;
+use display_info::DisplayInfo;
 
 pub fn display() -> Option<String> {
-    let mut cmd = Command::new("xrandr");
-    let stdout = match cmd.output() {
-        Ok(it) => it,
-        Err(_) => return None,
-    }
-    .stdout;
-    let stdout = match String::from_utf8(stdout) {
-        Ok(it) => it,
-        Err(_) => return None,
-    };
-    let mut info_line = None;
-    for line in stdout.lines() {
-        if line.contains("*+") {
-            info_line = Some(line);
-        }
-    }
-    let info_line = info_line?.trim().replace("*+", "");
-    let mut info_display = info_line.split_whitespace();
-    Some(format!(
-        "{} ({}Hz)",
-        info_display.next()?,
-        info_display.next()?
-    ))
+    let display_infos = DisplayInfo::all().ok()?;
+    let display: Vec<String> = display_infos
+        .into_iter()
+        .map(
+            |DisplayInfo {
+                 width,
+                 height,
+                 frequency,
+                 ..
+             }| format!("{}x{} ({:.0}Hz)", width, height, frequency),
+        )
+        .collect();
+    Some(display.join(", "))
 }

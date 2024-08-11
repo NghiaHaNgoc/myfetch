@@ -28,10 +28,7 @@ fn bash_version() -> Option<String> {
         Err(_) => return None,
     };
     let bash_version_line = bash_output.lines().next()?;
-    let version = bash_version_line
-        .split_whitespace()
-        .nth(3)?
-        .to_string();
+    let version = bash_version_line.split_whitespace().nth(3)?.to_string();
     Some(version)
 }
 
@@ -48,10 +45,7 @@ fn zsh_version() -> Option<String> {
         Err(_) => return None,
     };
     let zsh_version_line = zsh_output.lines().next()?;
-    let version = zsh_version_line
-        .split_whitespace()
-        .nth(1)?
-        .to_string();
+    let version = zsh_version_line.split_whitespace().nth(1)?.to_string();
     Some(version)
 }
 
@@ -68,9 +62,6 @@ fn fish_version() -> Option<String> {
         Err(_) => return None,
     };
     let fish_version_line = fish_output.lines().next()?;
-    let version = fish_version_line
-        .split_whitespace()
-        .nth(2)?
-        .to_string();
+    let version = fish_version_line.split_whitespace().nth(2)?.to_string();
     Some(version)
 }
